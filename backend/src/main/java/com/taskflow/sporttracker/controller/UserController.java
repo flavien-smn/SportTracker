@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.taskflow.sporttracker.dto.UserRequest;
-import com.taskflow.sporttracker.dto.UserResponse;
+import com.taskflow.sporttracker.dto.request.user.UserRequest;
+import com.taskflow.sporttracker.dto.response.user.UserResponse;
 import com.taskflow.sporttracker.service.UserService;
 
 import jakarta.validation.Valid;

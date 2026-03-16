@@ -1,4 +1,4 @@
-package com.taskflow.sporttracker.dto;
+package com.taskflow.sporttracker.dto.response.user;
 
 import java.util.UUID;
 

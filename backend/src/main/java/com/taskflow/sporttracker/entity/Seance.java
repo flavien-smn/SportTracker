@@ -31,8 +31,8 @@ public class Seance {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(nullable = false)
-    private LocalDate date;
+    @Column(name = "date_planned")
+    private LocalDate datePlanned;
 
     @Column(nullable = false)
     private String name;

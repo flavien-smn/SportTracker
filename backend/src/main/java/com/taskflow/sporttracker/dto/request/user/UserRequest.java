@@ -1,4 +1,6 @@
-package com.taskflow.sporttracker.dto;
+package com.taskflow.sporttracker.dto.request.user;
+
+import com.taskflow.sporttracker.dto.Role;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;

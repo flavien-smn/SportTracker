@@ -7,11 +7,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.taskflow.sporttracker.dto.Role;
-import com.taskflow.sporttracker.dto.UserRequest;
-import com.taskflow.sporttracker.dto.UserResponse;
 import com.taskflow.sporttracker.dto.auth.SignInResponse;
 import com.taskflow.sporttracker.dto.auth.SigninRequest;
 import com.taskflow.sporttracker.dto.auth.SignupRequest;
+import com.taskflow.sporttracker.dto.request.user.UserRequest;
+import com.taskflow.sporttracker.dto.response.user.UserResponse;
 import com.taskflow.sporttracker.entity.User;
 
 import lombok.RequiredArgsConstructor;

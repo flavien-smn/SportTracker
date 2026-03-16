@@ -8,8 +8,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.taskflow.sporttracker.dto.UserRequest;
-import com.taskflow.sporttracker.dto.UserResponse;
+import com.taskflow.sporttracker.dto.request.user.UserRequest;
+import com.taskflow.sporttracker.dto.response.user.UserResponse;
 import com.taskflow.sporttracker.entity.User;
 import com.taskflow.sporttracker.exception.customException.ConflictException;
 import com.taskflow.sporttracker.exception.customException.NotFoundException;
