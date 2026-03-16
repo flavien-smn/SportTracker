@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.taskflow.sporttracker.dto.auth.AuthResponse;
+import com.taskflow.sporttracker.dto.auth.SignInResponse;
 import com.taskflow.sporttracker.dto.auth.SigninRequest;
 import com.taskflow.sporttracker.dto.auth.SignupRequest;
 import com.taskflow.sporttracker.service.AuthService;
@@ -30,7 +30,7 @@ public class AuthController {
 
     @PostMapping("/signin")
     @ResponseStatus(HttpStatus.OK)
-    public AuthResponse signin(@Valid @RequestBody SigninRequest signinRequest) {
+    public SignInResponse signin(@Valid @RequestBody SigninRequest signinRequest) {
         return authService.signin(signinRequest);
     }
 

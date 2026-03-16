@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.taskflow.sporttracker.exception.customException.ConflictException;
+import com.taskflow.sporttracker.exception.customException.NotFoundException;
 import com.taskflow.sporttracker.exception.dto.ErrorResponse;
 
 @RestControllerAdvice
@@ -16,6 +17,15 @@ public class GlobalExceptionHandler {
                 .body(ErrorResponse.builder()
                         .message(e.getMessage())
                         .status(409)
+                        .build());
+    }
+
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleNotFoundException(NotFoundException e) {
+        return ResponseEntity.status(404)
+                .body(ErrorResponse.builder()
+                        .message(e.getMessage())
+                        .status(404)
                         .build());
     }
 

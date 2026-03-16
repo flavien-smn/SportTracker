@@ -5,12 +5,14 @@ import java.util.UUID;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.taskflow.sporttracker.dto.UserRequest;
 import com.taskflow.sporttracker.dto.UserResponse;
 import com.taskflow.sporttracker.entity.User;
 import com.taskflow.sporttracker.exception.customException.ConflictException;
+import com.taskflow.sporttracker.exception.customException.NotFoundException;
 import com.taskflow.sporttracker.mapper.UserMapper;
 import com.taskflow.sporttracker.repository.UserRepository;
 
@@ -23,15 +25,21 @@ public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
+    private final PasswordEncoder passwordEncoder;
+
     private final UserMapper userMapper;
 
     @Transactional
     public UserResponse create(UserRequest userRequest) {
-        Boolean exists = userRepository.existsByEmail(userRequest.getEmail());
+        Boolean exists = userRepository.existsByEmail(userRequest.email());
         if (exists) {
             throw new ConflictException("Email already used");
         }
-        var user = userMapper.toEntity(userRequest);
+        User user = User.builder()
+                .email(userRequest.email())
+                .password(passwordEncoder.encode(userRequest.password()))
+                .build();
+
         var savedUser = userRepository.save(user);
         return userMapper.toDto(savedUser);
     }
@@ -40,7 +48,12 @@ public class UserService implements UserDetailsService {
     public UserResponse getById(UUID id) {
         return userRepository.findById(id)
                 .map(userMapper::toDto)
-                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+                .orElseThrow(() -> new NotFoundException("User not found"));
+    }
+
+    public User getByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new NotFoundException("User not found"));
     }
 
     @Override
