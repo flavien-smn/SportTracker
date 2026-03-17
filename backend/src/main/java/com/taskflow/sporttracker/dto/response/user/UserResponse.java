@@ -2,20 +2,10 @@ package com.taskflow.sporttracker.dto.response.user;
 
 import java.util.UUID;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.taskflow.sporttracker.dto.Role;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-public class UserResponse {
-
-    private UUID id;
-
-    private String email;
-
-    private String displayName;
+public record UserResponse(
+        UUID id,
+        String email,
+        Role role) {
 }

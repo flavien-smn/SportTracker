@@ -38,7 +38,7 @@ public class Serie {
     private Integer nbReps;
 
     @Column(nullable = false)
-    private Float poids;
+    private Float weight;
 
     @Column(nullable = false)
     private Integer ordre;
