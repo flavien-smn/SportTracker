@@ -40,6 +40,6 @@ public class Serie {
     @Column(nullable = false)
     private Float weight;
 
-    @Column(nullable = false)
-    private Integer ordre;
+    @Column(nullable = false, name = "order_s")
+    private Integer orderS;
 }

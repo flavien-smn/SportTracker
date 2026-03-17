@@ -13,8 +13,8 @@ import com.taskflow.sporttracker.entity.Seance;
 public interface SeanceRepository extends JpaRepository<Seance, UUID> {
     @Query("SELECT s FROM Seance s " +
             "LEFT JOIN FETCH s.seanceExercices se " +
-            "LEFT JOIN FETCH se.exercice e " + // pour charger l'exercice
-            "LEFT JOIN FETCH se.series sr " + // pour charger les series
+            "LEFT JOIN FETCH se.exercice e " +
+            "LEFT JOIN FETCH se.series sr " +
             "WHERE s.id = :id")
     Optional<Seance> findByIdWithExercices(@Param("id") UUID id);
 

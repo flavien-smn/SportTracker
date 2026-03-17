@@ -25,9 +25,10 @@ public interface SeanceMapper {
     @Mapping(target = "id", source = "exercice.id")
     @Mapping(target = "name", source = "exercice.name")
     @Mapping(target = "description", source = "exercice.description")
-    @Mapping(target = "series", source = "series")
+    @Mapping(target = "order", source = "orderSe")
     ExerciceDetailResponse toExerciceDetail(SeanceExercice seanceExercice);
 
+    @Mapping(target = "order", source = "orderS")
     SerieDetailResponse toSerieDetail(Serie serie);
 
 }

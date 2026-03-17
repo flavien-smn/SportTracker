@@ -3,6 +3,7 @@ package com.taskflow.sporttracker.entity;
 import java.util.List;
 import java.util.UUID;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -41,7 +42,10 @@ public class SeanceExercice {
     private Exercice exercice;
 
     @OneToMany(mappedBy = "seanceExercice")
-    @OrderBy("ordre ASC")
+    @OrderBy("orderS ASC")
     private List<Serie> series;
+
+    @Column(nullable = false, name = "order_se")
+    private Integer orderSe;
 
 }

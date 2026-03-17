@@ -6,9 +6,10 @@ import java.util.UUID;
 import com.taskflow.sporttracker.dto.response.serie.SerieDetailResponse;
 
 public record ExerciceDetailResponse(
-        UUID id,
-        String name,
-        String description,
-        List<SerieDetailResponse> series) {
+                UUID id,
+                String name,
+                String description,
+                Integer order,
+                List<SerieDetailResponse> series) {
 
 }
