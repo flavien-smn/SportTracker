@@ -1,5 +1,6 @@
 package com.taskflow.sporttracker.service;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
@@ -41,6 +42,15 @@ public class SeanceService {
             throw new NotFoundException("Seance not found with id: " + id);
         }
         return seanceMapper.toDetailDto(seance);
+    }
+
+    public List<SeanceListResponse> getAllByUserEmail(String subject) {
+        if (!userService.existsByEmail(subject)) {
+            throw new NotFoundException("User not found with email: " + subject);
+        }
+        return seanceRepository.findAllByUserEmail(subject).stream()
+                .map(seanceMapper::toDto)
+                .toList();
     }
 
 }

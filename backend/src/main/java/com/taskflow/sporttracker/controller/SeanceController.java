@@ -1,5 +1,6 @@
 package com.taskflow.sporttracker.controller;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
@@ -35,6 +36,13 @@ public class SeanceController {
             @AuthenticationPrincipal Jwt jwt) {
 
         return seanceService.create(seanceCreateRequest, jwt.getSubject());
+    }
+
+    @GetMapping()
+    @ResponseStatus(code = HttpStatus.OK)
+    public List<SeanceListResponse> getAllByUserEmail(
+            @AuthenticationPrincipal Jwt jwt) {
+        return seanceService.getAllByUserEmail(jwt.getSubject());
     }
 
     @GetMapping("/{id}")
