@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 import com.taskflow.sporttracker.dto.request.workout.WorkoutCreateRequest;
+import com.taskflow.sporttracker.dto.request.workout.WorkoutUpdateRequest;
 import com.taskflow.sporttracker.dto.response.workout.WorkoutDetailResponse;
 import com.taskflow.sporttracker.dto.response.workout.WorkoutListResponse;
 import com.taskflow.sporttracker.entity.User;
@@ -45,9 +46,7 @@ public class WorkoutService {
     }
 
     public List<WorkoutListResponse> getAllByUserEmail(String subject) {
-        return workoutRepository.findAllByUserEmail(subject).stream()
-                .map(workoutMapper::toDto)
-                .toList();
+        return workoutMapper.toDtoList(workoutRepository.findAllByUserEmail(subject));
     }
 
     public void deleteById(UUID id, String subject) {
@@ -55,6 +54,14 @@ public class WorkoutService {
             throw new NotFoundException("Workout not found with id: " + id);
         }
         workoutRepository.deleteById(id);
+    }
+
+    public WorkoutListResponse partialUpdateById(UUID id, WorkoutUpdateRequest workoutUpdateRequest, String subject) {
+        Workout workout = workoutRepository.findByIdAndUserEmail(id, subject)
+                .orElseThrow(() -> new NotFoundException("Workout not found with id: " + id));
+        workoutUpdateRequest.name().ifPresent(workout::setName);
+        workoutUpdateRequest.datePlanned().ifPresent(date -> workout.setDatePlanned(date));
+        return workoutMapper.toDto(workoutRepository.save(workout));
     }
 
 }

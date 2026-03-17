@@ -1,11 +1,13 @@
 package com.taskflow.sporttracker.mapper;
 
+import java.util.List;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import com.taskflow.sporttracker.dto.request.workout.WorkoutCreateRequest;
 import com.taskflow.sporttracker.dto.response.ExerciseSet.ExerciseSetDetailResponse;
-import com.taskflow.sporttracker.dto.response.exercice.ExerciseDetailResponse;
+import com.taskflow.sporttracker.dto.response.exercise.ExerciseDetailResponse;
 import com.taskflow.sporttracker.dto.response.workout.WorkoutDetailResponse;
 import com.taskflow.sporttracker.dto.response.workout.WorkoutListResponse;
 import com.taskflow.sporttracker.entity.ExerciseSet;
@@ -30,5 +32,7 @@ public interface WorkoutMapper {
 
     @Mapping(target = "order", source = "orderS")
     ExerciseSetDetailResponse toSerieDetail(ExerciseSet serie);
+
+    List<WorkoutListResponse> toDtoList(List<Workout> workouts);
 
 }

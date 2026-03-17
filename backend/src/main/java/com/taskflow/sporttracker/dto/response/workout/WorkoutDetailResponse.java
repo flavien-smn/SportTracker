@@ -4,12 +4,12 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
-import com.taskflow.sporttracker.dto.response.exercice.ExerciseDetailResponse;
+import com.taskflow.sporttracker.dto.response.exercise.ExerciseDetailResponse;
 
 public record WorkoutDetailResponse(
-        UUID id,
-        String name,
-        LocalDate datePlanned,
-        List<ExerciseDetailResponse> exercises) {
+                UUID id,
+                String name,
+                LocalDate datePlanned,
+                List<ExerciseDetailResponse> exercises) {
 
 }
