@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -21,16 +23,23 @@ import lombok.Setter;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-@Table(name = "exercices")
-public class Exercice {
+@Table(name = "exercise_set")
+public class ExerciseSet {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(nullable = false)
-    private String name;
+    @ManyToOne
+    @JoinColumn(name = "workout_exercise_id", nullable = false)
+    private WorkoutExercise workoutExercise;
 
-    @Column(length = 500, nullable = false)
-    private String description;
+    @Column(nullable = false)
+    private Integer nbReps;
+
+    @Column(nullable = false)
+    private Float weight;
+
+    @Column(nullable = false, name = "order_s")
+    private Integer orderS;
 }

@@ -1,9 +1,9 @@
-package com.taskflow.sporttracker.dto.response.seance;
+package com.taskflow.sporttracker.dto.response.workout;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
-public record SeanceListResponse(
+public record WorkoutListResponse(
         UUID id,
         String name,
         LocalDate datePlanned) {

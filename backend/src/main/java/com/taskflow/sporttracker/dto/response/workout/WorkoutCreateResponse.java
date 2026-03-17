@@ -1,8 +1,8 @@
-package com.taskflow.sporttracker.dto.response.seance;
+package com.taskflow.sporttracker.dto.response.workout;
 
 import java.util.UUID;
 
-public record SeanceCreateResponse(
+public record WorkoutCreateResponse(
         UUID id,
         String name,
         String datePlanned) {

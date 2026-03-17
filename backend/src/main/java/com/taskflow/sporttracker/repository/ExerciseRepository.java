@@ -4,8 +4,8 @@ import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.taskflow.sporttracker.entity.Serie;
+import com.taskflow.sporttracker.entity.Exercise;
 
-public interface SerieRepository extends JpaRepository<Serie, UUID> {
+public interface ExerciseRepository extends JpaRepository<Exercise, UUID> {
 
 }

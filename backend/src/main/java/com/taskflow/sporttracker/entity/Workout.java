@@ -1,5 +1,7 @@
 package com.taskflow.sporttracker.entity;
 
+import java.time.LocalDate;
+import java.util.Set;
 import java.util.UUID;
 
 import jakarta.persistence.Column;
@@ -9,6 +11,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -18,28 +22,29 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Setter
 @Getter
+@Setter
+@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@Builder
-@Table(name = "series")
-public class Serie {
+@Table(name = "workouts")
+public class Workout {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @ManyToOne
-    @JoinColumn(name = "seance_exercice_id", nullable = false)
-    private SeanceExercice seanceExercice;
+    @Column(name = "date_planned")
+    private LocalDate datePlanned;
 
     @Column(nullable = false)
-    private Integer nbReps;
+    private String name;
 
-    @Column(nullable = false)
-    private Float weight;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
-    @Column(nullable = false, name = "order_s")
-    private Integer orderS;
+    @OneToMany(mappedBy = "workout")
+    @OrderBy("orderSe ASC")
+    private Set<WorkoutExercise> workoutExercises;
 }
