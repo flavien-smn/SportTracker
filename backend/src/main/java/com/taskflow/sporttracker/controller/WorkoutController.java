@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.taskflow.sporttracker.dto.request.seance.WorkoutCreateRequest;
+import com.taskflow.sporttracker.dto.request.workout.WorkoutCreateRequest;
 import com.taskflow.sporttracker.dto.response.workout.WorkoutDetailResponse;
 import com.taskflow.sporttracker.dto.response.workout.WorkoutListResponse;
 import com.taskflow.sporttracker.service.WorkoutService;
@@ -32,7 +32,7 @@ public class WorkoutController {
 
     @PostMapping()
     @ResponseStatus(code = HttpStatus.CREATED)
-    public WorkoutListResponse createSeance(
+    public WorkoutListResponse createWorkout(
             @Valid @RequestBody WorkoutCreateRequest workoutCreateRequest,
             @AuthenticationPrincipal Jwt jwt) {
 
@@ -48,7 +48,7 @@ public class WorkoutController {
 
     @GetMapping("/{id}")
     @ResponseStatus(code = HttpStatus.OK)
-    public WorkoutDetailResponse getSeanceDetailById(
+    public WorkoutDetailResponse getWorkoutDetailById(
             @PathVariable(name = "id") UUID id,
             @AuthenticationPrincipal Jwt jwt) {
         return workoutService.getById(id, jwt.getSubject());
@@ -56,7 +56,7 @@ public class WorkoutController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
-    public void deleteSeanceById(
+    public void deleteWorkoutById(
             @PathVariable(name = "id") UUID id,
             @AuthenticationPrincipal Jwt jwt) {
         workoutService.deleteById(id, jwt.getSubject());

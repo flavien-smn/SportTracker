@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
-import com.taskflow.sporttracker.dto.request.seance.WorkoutCreateRequest;
+import com.taskflow.sporttracker.dto.request.workout.WorkoutCreateRequest;
 import com.taskflow.sporttracker.dto.response.workout.WorkoutDetailResponse;
 import com.taskflow.sporttracker.dto.response.workout.WorkoutListResponse;
 import com.taskflow.sporttracker.entity.User;

@@ -3,7 +3,7 @@ package com.taskflow.sporttracker.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-import com.taskflow.sporttracker.dto.request.seance.WorkoutCreateRequest;
+import com.taskflow.sporttracker.dto.request.workout.WorkoutCreateRequest;
 import com.taskflow.sporttracker.dto.response.ExerciseSet.ExerciseSetDetailResponse;
 import com.taskflow.sporttracker.dto.response.exercice.ExerciseDetailResponse;
 import com.taskflow.sporttracker.dto.response.workout.WorkoutDetailResponse;
@@ -15,18 +15,18 @@ import com.taskflow.sporttracker.entity.WorkoutExercise;
 @Mapper(componentModel = "spring")
 public interface WorkoutMapper {
 
-    Workout toEntity(WorkoutCreateRequest seanceCreateRequest);
+    Workout toEntity(WorkoutCreateRequest workoutCreateRequest);
 
-    WorkoutListResponse toDto(Workout seance);
+    WorkoutListResponse toDto(Workout workout);
 
     @Mapping(target = "exercises", source = "workoutExercises")
-    WorkoutDetailResponse toDetailDto(Workout seance);
+    WorkoutDetailResponse toDetailDto(Workout workout);
 
     @Mapping(target = "id", source = "exercise.id")
     @Mapping(target = "name", source = "exercise.name")
     @Mapping(target = "description", source = "exercise.description")
     @Mapping(target = "order", source = "orderSe")
-    ExerciseDetailResponse toExerciceDetail(WorkoutExercise seanceExercice);
+    ExerciseDetailResponse toExerciceDetail(WorkoutExercise workoutExercice);
 
     @Mapping(target = "order", source = "orderS")
     ExerciseSetDetailResponse toSerieDetail(ExerciseSet serie);
