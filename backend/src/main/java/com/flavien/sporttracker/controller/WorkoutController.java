@@ -16,12 +16,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.flavien.sporttracker.dto.request.exerciseSet.ExerciseSetCreateRequest;
 import com.flavien.sporttracker.dto.request.workout.WorkoutCreateRequest;
 import com.flavien.sporttracker.dto.request.workout.WorkoutUpdateRequest;
 import com.flavien.sporttracker.dto.request.workoutExercise.WorkoutExerciseCreateRequest;
+import com.flavien.sporttracker.dto.response.exerciseSet.ExerciseSetDetailResponse;
 import com.flavien.sporttracker.dto.response.workout.WorkoutDetailResponse;
 import com.flavien.sporttracker.dto.response.workout.WorkoutListResponse;
 import com.flavien.sporttracker.dto.response.workoutExercise.WorkoutExerciseListResponse;
+import com.flavien.sporttracker.service.ExerciseSetService;
 import com.flavien.sporttracker.service.WorkoutExerciseService;
 import com.flavien.sporttracker.service.WorkoutService;
 
@@ -36,6 +39,8 @@ public class WorkoutController {
     private final WorkoutService workoutService;
 
     private final WorkoutExerciseService workoutExerciseService;
+
+    private final ExerciseSetService exerciseSetService;
 
     @PostMapping()
     @ResponseStatus(code = HttpStatus.CREATED)
@@ -95,6 +100,26 @@ public class WorkoutController {
             @PathVariable(name = "workoutExerciseId") UUID workoutExerciseId,
             @AuthenticationPrincipal Jwt jwt) {
         workoutExerciseService.deleteById(workoutId, workoutExerciseId, jwt.getSubject());
+    }
+
+    @PostMapping("/{workoutId}/exercises/{workoutExerciseId}/sets")
+    @ResponseStatus(code = HttpStatus.CREATED)
+    public ExerciseSetDetailResponse addSet(
+            @Valid @RequestBody ExerciseSetCreateRequest exerciseSetCreateRequest,
+            @PathVariable(name = "workoutId") UUID workoutId,
+            @PathVariable(name = "workoutExerciseId") UUID workoutExerciseId,
+            @AuthenticationPrincipal Jwt jwt) {
+        return exerciseSetService.create(exerciseSetCreateRequest, workoutId, workoutExerciseId, jwt.getSubject());
+    }
+
+    @DeleteMapping("/{workoutId}/exercises/{workoutExerciseId}/sets/{exerciseSetId}")
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    public void deleteSet(
+            @PathVariable(name = "workoutId") UUID workoutId,
+            @PathVariable(name = "workoutExerciseId") UUID workoutExerciseId,
+            @PathVariable(name = "exerciseSetId") UUID exerciseSetId,
+            @AuthenticationPrincipal Jwt jwt) {
+        exerciseSetService.deleteById(workoutId, workoutExerciseId, exerciseSetId, jwt.getSubject());
     }
 
 }

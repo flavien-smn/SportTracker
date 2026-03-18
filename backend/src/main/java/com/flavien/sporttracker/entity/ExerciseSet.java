@@ -35,7 +35,7 @@ public class ExerciseSet {
     private WorkoutExercise workoutExercise;
 
     @Column(nullable = false)
-    private Integer nbReps;
+    private Integer repetitions;
 
     @Column(nullable = false)
     private Float weight;
