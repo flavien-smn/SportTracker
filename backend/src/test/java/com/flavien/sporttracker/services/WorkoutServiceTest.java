@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
+import java.time.LocalDate;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -52,13 +53,20 @@ public class WorkoutServiceTest {
                                 .email(email)
                                 .build();
 
+                LocalDate datePlanned = LocalDate.now();
+
                 Workout workout = Workout.builder()
+                                .name("Workout 1")
+                                .datePlanned(datePlanned)
                                 .id(workoutId)
                                 .user(user)
                                 .build();
 
                 when(workoutRepository.findByIdWithExercices(workoutId))
                                 .thenReturn(Optional.of(workout));
+
+                when(workoutMapper.toDetailDto(workout))
+                                .thenReturn(new WorkoutDetailResponse(workoutId, "Workout 1", datePlanned, null));
 
                 WorkoutDetailResponse response = workoutService.getById(workoutId, email);
 
@@ -73,12 +81,10 @@ public class WorkoutServiceTest {
          */
         @Test
         void getById_shouldThrowNotFoundException_whenWorkoutNotFound() {
-                // GIVEN
                 UUID id = UUID.randomUUID();
                 when(workoutRepository.findByIdWithExercices(id))
                                 .thenReturn(Optional.empty());
 
-                // WHEN + THEN
                 assertThrows(NotFoundException.class,
                                 () -> workoutService.getById(id, "test@test.com"));
         }
