@@ -18,8 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.taskflow.sporttracker.dto.request.workout.WorkoutCreateRequest;
 import com.taskflow.sporttracker.dto.request.workout.WorkoutUpdateRequest;
+import com.taskflow.sporttracker.dto.request.workoutExercise.WorkoutExerciseCreateRequest;
 import com.taskflow.sporttracker.dto.response.workout.WorkoutDetailResponse;
 import com.taskflow.sporttracker.dto.response.workout.WorkoutListResponse;
+import com.taskflow.sporttracker.dto.response.workoutExercise.WorkoutExerciseListResponse;
+import com.taskflow.sporttracker.service.WorkoutExerciseService;
 import com.taskflow.sporttracker.service.WorkoutService;
 
 import jakarta.validation.Valid;
@@ -31,6 +34,8 @@ import lombok.RequiredArgsConstructor;
 public class WorkoutController {
 
     private final WorkoutService workoutService;
+
+    private final WorkoutExerciseService workoutExerciseService;
 
     @PostMapping()
     @ResponseStatus(code = HttpStatus.CREATED)
@@ -71,6 +76,25 @@ public class WorkoutController {
             @PathVariable(name = "id") UUID id,
             @AuthenticationPrincipal Jwt jwt) {
         workoutService.deleteById(id, jwt.getSubject());
+    }
+
+    @PostMapping("/{id}/exercises")
+    @ResponseStatus(code = HttpStatus.CREATED)
+    public WorkoutExerciseListResponse addExerciseToWorkoutById(
+            @Valid @RequestBody WorkoutExerciseCreateRequest workoutExerciseCreateRequest,
+            @PathVariable(name = "id") UUID id,
+            @AuthenticationPrincipal Jwt jwt) {
+
+        return workoutExerciseService.addWorkoutExerciseById(id, workoutExerciseCreateRequest, jwt.getSubject());
+    }
+
+    @DeleteMapping("/{workoutId}/exercises/{workoutExerciseId}")
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    public void deleteWorkoutExerciseById(
+            @PathVariable(name = "workoutId") UUID workoutId,
+            @PathVariable(name = "workoutExerciseId") UUID workoutExerciseId,
+            @AuthenticationPrincipal Jwt jwt) {
+        workoutExerciseService.deleteById(workoutId, workoutExerciseId, jwt.getSubject());
     }
 
 }

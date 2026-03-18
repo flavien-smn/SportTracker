@@ -45,6 +45,6 @@ public class Workout {
     private User user;
 
     @OneToMany(mappedBy = "workout")
-    @OrderBy("orderSe ASC")
+    @OrderBy("orderWe ASC")
     private Set<WorkoutExercise> workoutExercises;
 }

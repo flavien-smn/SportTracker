@@ -45,7 +45,7 @@ public class WorkoutExercise {
     @OrderBy("orderS ASC")
     private List<ExerciseSet> exerciseSets;
 
-    @Column(nullable = false, name = "order_se")
-    private Integer orderSe;
+    @Column(nullable = false, name = "order_we")
+    private Integer orderWe;
 
 }

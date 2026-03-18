@@ -45,23 +45,28 @@ public class WorkoutService {
         return workoutMapper.toDetailDto(workout);
     }
 
-    public List<WorkoutListResponse> getAllByUserEmail(String subject) {
-        return workoutMapper.toDtoList(workoutRepository.findAllByUserEmail(subject));
+    public List<WorkoutListResponse> getAllByUserEmail(String email) {
+        return workoutMapper.toDtoList(workoutRepository.findAllByUserEmail(email));
     }
 
-    public void deleteById(UUID id, String subject) {
-        if (!workoutRepository.existsByIdAndUserEmail(id, subject)) {
+    public void deleteById(UUID id, String email) {
+        if (!workoutRepository.existsByIdAndUserEmail(id, email)) {
             throw new NotFoundException("Workout not found with id: " + id);
         }
         workoutRepository.deleteById(id);
     }
 
-    public WorkoutListResponse partialUpdateById(UUID id, WorkoutUpdateRequest workoutUpdateRequest, String subject) {
-        Workout workout = workoutRepository.findByIdAndUserEmail(id, subject)
-                .orElseThrow(() -> new NotFoundException("Workout not found with id: " + id));
+    public WorkoutListResponse partialUpdateById(UUID id, WorkoutUpdateRequest workoutUpdateRequest, String email) {
+        Workout workout = findByIdAndUserEmail(id, email);
         workoutUpdateRequest.name().ifPresent(workout::setName);
         workoutUpdateRequest.datePlanned().ifPresent(date -> workout.setDatePlanned(date));
         return workoutMapper.toDto(workoutRepository.save(workout));
+    }
+
+    public Workout findByIdAndUserEmail(UUID id, String email) {
+        Workout workout = workoutRepository.findByIdAndUserEmail(id, email)
+                .orElseThrow(() -> new NotFoundException("Workout not found with id: " + id));
+        return workout;
     }
 
 }
