@@ -11,8 +11,6 @@ import com.flavien.sporttracker.entity.WorkoutExercise;
 import com.flavien.sporttracker.exception.customException.NotFoundException;
 import com.flavien.sporttracker.mapper.ExerciseSetMapper;
 import com.flavien.sporttracker.repository.ExerciseSetRepository;
-import com.flavien.sporttracker.repository.WorkoutExerciseRepository;
-import com.flavien.sporttracker.repository.WorkoutRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,41 +18,38 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ExerciseSetService {
 
-    private final ExerciseSetRepository exerciseSetRepository;
+        private final ExerciseSetRepository exerciseSetRepository;
 
-    private final WorkoutExerciseRepository workoutExerciseRepository;
+        private final ExerciseSetMapper exerciseSetMapper;
 
-    private final WorkoutRepository workoutRepository;
+        private final WorkoutService workoutService;
 
-    private final ExerciseSetMapper exerciseSetMapper;
+        private final WorkoutExerciseService workoutExerciseService;
 
-    public ExerciseSetDetailResponse createExerciseSet(ExerciseSetCreateRequest exerciseSetCreateRequest,
-            UUID workoutId,
-            UUID workoutExerciseId, String email) {
+        public ExerciseSetDetailResponse createExerciseSet(ExerciseSetCreateRequest exerciseSetCreateRequest,
+                        UUID workoutId,
+                        UUID workoutExerciseId, String email) {
 
-        workoutRepository.findByIdAndUserEmail(workoutId, email)
-                .orElseThrow(() -> new NotFoundException("Workout not found with id: " + workoutId));
+                workoutService.checkWorkoutOwnership(workoutId, email);
 
-        WorkoutExercise workoutExercise = workoutExerciseRepository
-                .findByIdAndWorkoutId(workoutExerciseId, workoutId)
-                .orElseThrow(() -> new NotFoundException("WorkoutExercise not found"));
+                WorkoutExercise workoutExercise = workoutExerciseService.getByIdAndWorkoutId(workoutExerciseId,
+                                workoutId);
 
-        Integer maxOrder = exerciseSetRepository.findMaxByWorkoutExerciseId(workoutExerciseId).orElse(0);
-        ExerciseSet exerciseSetEntity = exerciseSetMapper.toEntity(exerciseSetCreateRequest);
-        exerciseSetEntity.setOrderS(maxOrder + 1);
-        exerciseSetEntity.setWorkoutExercise(workoutExercise);
+                Integer maxOrder = exerciseSetRepository.findMaxByWorkoutExerciseId(workoutExerciseId).orElse(0);
+                ExerciseSet exerciseSetEntity = exerciseSetMapper.toEntity(exerciseSetCreateRequest);
+                exerciseSetEntity.setOrderS(maxOrder + 1);
+                exerciseSetEntity.setWorkoutExercise(workoutExercise);
 
-        return exerciseSetMapper.toExercisesSetDetail(exerciseSetRepository.save(exerciseSetEntity));
-    }
+                return exerciseSetMapper.toExercisesSetDetail(exerciseSetRepository.save(exerciseSetEntity));
+        }
 
-    public void deleteExerciseSetById(UUID workoutId, UUID workoutExerciseId, UUID exerciseSetId, String subject) {
-        workoutRepository.findByIdAndUserEmail(workoutId, subject)
-                .orElseThrow(() -> new NotFoundException("Workout not found with id: " + workoutId));
-        workoutExerciseRepository.findByIdAndWorkoutId(workoutExerciseId, workoutId)
-                .orElseThrow(() -> new NotFoundException("WorkoutExercise not found with id: " + workoutExerciseId));
-        ExerciseSet exerciseSet = exerciseSetRepository.findByIdAndWorkoutExerciseId(exerciseSetId, workoutExerciseId)
-                .orElseThrow(() -> new NotFoundException("ExerciseSet not found with id: " + exerciseSetId));
-        exerciseSetRepository.delete(exerciseSet);
-    }
+        public void deleteExerciseSetById(UUID workoutId, UUID workoutExerciseId, UUID exerciseSetId, String email) {
+                workoutExerciseService.checkWorkoutExerciseOwnership(workoutExerciseId, workoutId, email);
+                ExerciseSet exerciseSet = exerciseSetRepository
+                                .findByIdAndWorkoutExerciseId(exerciseSetId, workoutExerciseId)
+                                .orElseThrow(() -> new NotFoundException(
+                                                "ExerciseSet not found with id: " + exerciseSetId));
+                exerciseSetRepository.delete(exerciseSet);
+        }
 
 }

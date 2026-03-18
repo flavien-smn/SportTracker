@@ -58,16 +58,21 @@ public class WorkoutService {
 
     public WorkoutListResponse partialUpdateWorkoutById(UUID id, WorkoutUpdateRequest workoutUpdateRequest,
             String email) {
-        Workout workout = findByIdAndUserEmail(id, email);
+        Workout workout = getByIdAndEmail(id, email);
         workoutUpdateRequest.name().ifPresent(workout::setName);
-        workoutUpdateRequest.datePlanned().ifPresent(date -> workout.setDatePlanned(date));
+        workoutUpdateRequest.datePlanned().ifPresent(workout::setDatePlanned);
         return workoutMapper.toDto(workoutRepository.save(workout));
     }
 
-    public Workout findByIdAndUserEmail(UUID id, String email) {
-        Workout workout = workoutRepository.findByIdAndUserEmail(id, email)
-                .orElseThrow(() -> new NotFoundException("Workout not found with id: " + id));
-        return workout;
+    public void checkWorkoutOwnership(UUID workoutId, String email) {
+        if (!workoutRepository.existsByIdAndUserEmail(workoutId, email)) {
+            throw new NotFoundException("Workout not found with id: " + workoutId);
+        }
+    }
+
+    public Workout getByIdAndEmail(UUID workoutId, String email) {
+        return workoutRepository.findByIdAndUserEmail(workoutId, email)
+                .orElseThrow(() -> new NotFoundException("Workout not found with id: " + workoutId));
     }
 
 }

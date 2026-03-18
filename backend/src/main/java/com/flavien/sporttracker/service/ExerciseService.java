@@ -46,4 +46,9 @@ public class ExerciseService {
 
     }
 
+    public Exercise getByIdAndAvailableForUser(UUID id, String email) {
+        return exerciseRepository.findByIdAndAvailableForUser(id, email)
+                .orElseThrow(() -> new NotFoundException("Exercise not found with id: " + id));
+    }
+
 }
