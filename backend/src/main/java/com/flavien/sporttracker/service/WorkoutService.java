@@ -49,14 +49,15 @@ public class WorkoutService {
         return workoutMapper.toDtoList(workoutRepository.findAllByUserEmail(email));
     }
 
-    public void deleteById(UUID id, String email) {
+    public void deleteWorkoutById(UUID id, String email) {
         if (!workoutRepository.existsByIdAndUserEmail(id, email)) {
             throw new NotFoundException("Workout not found with id: " + id);
         }
         workoutRepository.deleteById(id);
     }
 
-    public WorkoutListResponse partialUpdateById(UUID id, WorkoutUpdateRequest workoutUpdateRequest, String email) {
+    public WorkoutListResponse partialUpdateWorkoutById(UUID id, WorkoutUpdateRequest workoutUpdateRequest,
+            String email) {
         Workout workout = findByIdAndUserEmail(id, email);
         workoutUpdateRequest.name().ifPresent(workout::setName);
         workoutUpdateRequest.datePlanned().ifPresent(date -> workout.setDatePlanned(date));

@@ -52,7 +52,7 @@ public class WorkoutExerciseService {
 
         }
 
-        public void deleteById(UUID workoutId, UUID workoutExerciseId, String email) {
+        public void deleteWorkoutExerciseById(UUID workoutId, UUID workoutExerciseId, String email) {
                 workoutRepository.findByIdAndUserEmail(workoutId, email)
                                 .orElseThrow(() -> new NotFoundException("Workout not found with id: " + workoutId));
 

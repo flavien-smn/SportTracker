@@ -28,7 +28,8 @@ public class ExerciseSetService {
 
     private final ExerciseSetMapper exerciseSetMapper;
 
-    public ExerciseSetDetailResponse create(ExerciseSetCreateRequest exerciseSetCreateRequest, UUID workoutId,
+    public ExerciseSetDetailResponse createExerciseSet(ExerciseSetCreateRequest exerciseSetCreateRequest,
+            UUID workoutId,
             UUID workoutExerciseId, String email) {
 
         workoutRepository.findByIdAndUserEmail(workoutId, email)
@@ -46,7 +47,7 @@ public class ExerciseSetService {
         return exerciseSetMapper.toExercisesSetDetail(exerciseSetRepository.save(exerciseSetEntity));
     }
 
-    public void deleteById(UUID workoutId, UUID workoutExerciseId, UUID exerciseSetId, String subject) {
+    public void deleteExerciseSetById(UUID workoutId, UUID workoutExerciseId, UUID exerciseSetId, String subject) {
         workoutRepository.findByIdAndUserEmail(workoutId, subject)
                 .orElseThrow(() -> new NotFoundException("Workout not found with id: " + workoutId));
         workoutExerciseRepository.findByIdAndWorkoutId(workoutExerciseId, workoutId)

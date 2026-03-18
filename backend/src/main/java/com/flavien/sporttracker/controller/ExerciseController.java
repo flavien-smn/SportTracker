@@ -29,12 +29,27 @@ public class ExerciseController {
 
     private final ExerciseService exerciseService;
 
+    /**
+     * Get all exercises available for the authenticated user.
+     * 
+     * @param jwt The JWT token containing the authenticated user's information.
+     * @return A list of exercises available for the authenticated user.
+     */
     @GetMapping()
     @ResponseStatus(code = HttpStatus.OK)
     public List<ExerciseListResponse> getAllAvailableByUser(@AuthenticationPrincipal Jwt jwt) {
         return exerciseService.getAllAvailableForUser(jwt.getSubject());
     }
 
+    /**
+     * Create a new exercise for the authenticated user.
+     * 
+     * @param exerciseCreateRequest The details of the exercise to create.
+     * @param jwt                   The JWT token containing the authenticated
+     *                              user's
+     *                              information.
+     * @return The created exercise's details.
+     */
     @PostMapping()
     @ResponseStatus(code = HttpStatus.CREATED)
     public ExerciseListResponse create(
@@ -44,6 +59,12 @@ public class ExerciseController {
         return exerciseService.create(exerciseCreateRequest, jwt.getSubject());
     }
 
+    /**
+     * Delete an exercise by its ID for the authenticated user.
+     * 
+     * @param id  The ID of the exercise to delete.
+     * @param jwt The JWT token containing the authenticated user's information.
+     */
     @DeleteMapping("/{id}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public void delete(@PathVariable(name = "id") UUID id, @AuthenticationPrincipal Jwt jwt) {

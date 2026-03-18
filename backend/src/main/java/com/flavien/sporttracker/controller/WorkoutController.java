@@ -42,6 +42,14 @@ public class WorkoutController {
 
     private final ExerciseSetService exerciseSetService;
 
+    /**
+     * Create a new workout for the authenticated user.
+     * 
+     * @param workoutCreateRequest The details of the workout to create.
+     * @param jwt                  The JWT token containing the authenticated user's
+     *                             information.
+     * @return The created workout's details.
+     */
     @PostMapping()
     @ResponseStatus(code = HttpStatus.CREATED)
     public WorkoutListResponse createWorkout(
@@ -51,6 +59,12 @@ public class WorkoutController {
         return workoutService.create(workoutCreateRequest, jwt.getSubject());
     }
 
+    /**
+     * Get all workouts for the authenticated user.
+     * 
+     * @param jwt The JWT token containing the authenticated user's information.
+     * @return A list of workouts belonging to the authenticated user.
+     */
     @GetMapping()
     @ResponseStatus(code = HttpStatus.OK)
     public List<WorkoutListResponse> getAllByUserEmail(
@@ -58,6 +72,14 @@ public class WorkoutController {
         return workoutService.getAllByUserEmail(jwt.getSubject());
     }
 
+    /**
+     * Get the details of a specific workout by its ID for the authenticated user.
+     * 
+     * @param id  The ID of the workout to retrieve.
+     * @param jwt The JWT token containing the authenticated user's information.
+     * @return The details of the requested workout if it belongs to the
+     *         authenticated user.
+     */
     @GetMapping("/{id}")
     @ResponseStatus(code = HttpStatus.OK)
     public WorkoutDetailResponse getWorkoutDetailById(
@@ -66,23 +88,52 @@ public class WorkoutController {
         return workoutService.getById(id, jwt.getSubject());
     }
 
+    /**
+     * Partially update a workout's details by its ID for the authenticated user.
+     * 
+     * @param id                   The ID of the workout to update.
+     * @param workoutUpdateRequest The details to update for the workout.
+     * @param jwt                  The JWT token containing the authenticated user's
+     *                             information.
+     * @return The updated workout's details if the workout belongs to the
+     *         authenticated user.
+     */
     @PatchMapping("/{id}")
     @ResponseStatus(code = HttpStatus.OK)
     public WorkoutListResponse updateWorkoutById(
             @PathVariable(name = "id") UUID id,
             @Valid @RequestBody WorkoutUpdateRequest workoutUpdateRequest,
             @AuthenticationPrincipal Jwt jwt) {
-        return workoutService.partialUpdateById(id, workoutUpdateRequest, jwt.getSubject());
+        return workoutService.partialUpdateWorkoutById(id, workoutUpdateRequest, jwt.getSubject());
     }
 
+    /**
+     * Delete a workout by its ID for the authenticated user.
+     * 
+     * @param id  The ID of the workout to delete.
+     * @param jwt The JWT token containing the authenticated user's information.
+     */
     @DeleteMapping("/{id}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public void deleteWorkoutById(
             @PathVariable(name = "id") UUID id,
             @AuthenticationPrincipal Jwt jwt) {
-        workoutService.deleteById(id, jwt.getSubject());
+        workoutService.deleteWorkoutById(id, jwt.getSubject());
     }
 
+    /**
+     * Add an exercise to a workout by the workout's ID for the authenticated user.
+     * 
+     * @param workoutExerciseCreateRequest The details of the exercise to add to the
+     *                                     workout.
+     * @param id                           The ID of the workout to which the
+     *                                     exercise will be added.
+     * @param jwt                          The JWT token containing the
+     *                                     authenticated
+     *                                     user's information.
+     * @return The details of the added exercise within the workout if the workout
+     *         belongs to the authenticated user.
+     */
     @PostMapping("/{id}/exercises")
     @ResponseStatus(code = HttpStatus.CREATED)
     public WorkoutExerciseListResponse addExerciseToWorkoutById(
@@ -93,15 +144,41 @@ public class WorkoutController {
         return workoutExerciseService.addWorkoutExerciseById(id, workoutExerciseCreateRequest, jwt.getSubject());
     }
 
+    /**
+     * Delete an exercise from a workout by the workout's ID and the exercise's ID
+     * for the authenticated user.
+     * 
+     * @param workoutId         The ID of the workout from which the exercise will
+     *                          be
+     *                          deleted.
+     * @param workoutExerciseId The ID of the exercise to delete from the workout.
+     * @param jwt               The JWT token containing the authenticated user's
+     *                          information.
+     */
     @DeleteMapping("/{workoutId}/exercises/{workoutExerciseId}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public void deleteWorkoutExerciseById(
             @PathVariable(name = "workoutId") UUID workoutId,
             @PathVariable(name = "workoutExerciseId") UUID workoutExerciseId,
             @AuthenticationPrincipal Jwt jwt) {
-        workoutExerciseService.deleteById(workoutId, workoutExerciseId, jwt.getSubject());
+        workoutExerciseService.deleteWorkoutExerciseById(workoutId, workoutExerciseId, jwt.getSubject());
     }
 
+    /**
+     * Add a set to an exercise within a workout by the workout's ID, the
+     * exercise's ID, and the set's details for the authenticated user.
+     * 
+     * @param exerciseSetCreateRequest The details of the set to add to the
+     *                                 exercise within the workout.
+     * @param workoutId                The ID of the workout to which the exercise
+     *                                 belongs.
+     * @param workoutExerciseId        The ID of the exercise to which the set will
+     *                                 be added.
+     * @param jwt                      The JWT token containing the authenticated
+     *                                 user's information.
+     * @return The details of the added set within the exercise if the workout
+     *         belongs to the authenticated user.
+     */
     @PostMapping("/{workoutId}/exercises/{workoutExerciseId}/sets")
     @ResponseStatus(code = HttpStatus.CREATED)
     public ExerciseSetDetailResponse addSet(
@@ -109,9 +186,22 @@ public class WorkoutController {
             @PathVariable(name = "workoutId") UUID workoutId,
             @PathVariable(name = "workoutExerciseId") UUID workoutExerciseId,
             @AuthenticationPrincipal Jwt jwt) {
-        return exerciseSetService.create(exerciseSetCreateRequest, workoutId, workoutExerciseId, jwt.getSubject());
+        return exerciseSetService.createExerciseSet(exerciseSetCreateRequest, workoutId, workoutExerciseId,
+                jwt.getSubject());
     }
 
+    /**
+     * Delete a set from an exercise within a workout by the workout's ID, the
+     * exercise's ID, and the set's ID for the authenticated user.
+     * 
+     * @param workoutId         The ID of the workout from which the set will be
+     *                          deleted.
+     * @param workoutExerciseId The ID of the exercise from which the set will be
+     *                          deleted.
+     * @param exerciseSetId     The ID of the set to delete from the exercise.
+     * @param jwt               The JWT token containing the authenticated user's
+     *                          information.
+     */
     @DeleteMapping("/{workoutId}/exercises/{workoutExerciseId}/sets/{exerciseSetId}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public void deleteSet(
@@ -119,7 +209,7 @@ public class WorkoutController {
             @PathVariable(name = "workoutExerciseId") UUID workoutExerciseId,
             @PathVariable(name = "exerciseSetId") UUID exerciseSetId,
             @AuthenticationPrincipal Jwt jwt) {
-        exerciseSetService.deleteById(workoutId, workoutExerciseId, exerciseSetId, jwt.getSubject());
+        exerciseSetService.deleteExerciseSetById(workoutId, workoutExerciseId, exerciseSetId, jwt.getSubject());
     }
 
 }

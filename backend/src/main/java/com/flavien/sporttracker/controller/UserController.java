@@ -26,6 +26,12 @@ public class UserController {
 
     private final UserService userService;
 
+    /**
+     * Get a user by their ID.
+     * 
+     * @param id The ID of the user to retrieve.
+     * @return The details of the user with the specified ID.
+     */
     @GetMapping("/{id}")
     @ResponseStatus(code = HttpStatus.OK)
     @PreAuthorize("hasRole('USER')")
@@ -33,6 +39,12 @@ public class UserController {
         return userService.getById(id);
     }
 
+    /**
+     * Create a new user.
+     * 
+     * @param userRequest The details of the user to create.
+     * @return The details of the created user.
+     */
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
     public UserResponse createUser(@Valid @RequestBody UserRequest userRequest) {
