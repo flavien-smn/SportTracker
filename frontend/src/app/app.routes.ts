@@ -13,11 +13,6 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    path: '**',
-    redirectTo: 'workouts',
-    pathMatch: 'full',
-  },
-  {
     path: 'auth',
     children: [
       {
@@ -46,5 +41,10 @@ export const routes: Routes = [
     path: 'exercises',
     component: ExerciseList,
     canActivate: [authGuard],
+  },
+  {
+    path: '**',
+    redirectTo: 'workouts',
+    pathMatch: 'full',
   },
 ];
