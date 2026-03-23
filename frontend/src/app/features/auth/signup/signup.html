@@ -1,1 +1,33 @@
-<p>signup works!</p>
+<div class="flex flex-row h-screen w-screen items-center justify-center">
+  <div class="w-1/2 h-full p-14 bg-neutral-900 flex flex-col justify-center gap-10">
+    <div>
+      <span class="logo-name">SportTracker</span>
+      <h1>Welcome back</h1>
+    </div>
+
+    <form
+      [formGroup]="signUpForm"
+      (ngSubmit)="onSubmitSignupForm()"
+      class="flex flex-col gap-y-3 w-full"
+    >
+      <div class="flex flex-col">
+        <label for="email">Email :</label>
+        <input pInputText id="email" type="text" formControlName="email" />
+      </div>
+
+      <div class="flex flex-col">
+        <label for="password">Password :</label>
+        <input pInputText id="password" type="password" formControlName="password" />
+      </div>
+
+      <div class="flex flex-row justify-between w-full items-center">
+        <label class="flex items-center gap-x-1">
+          <p-checkbox [binary]="true" /> Se rappeler de moi
+        </label>
+        <p-button label="Mot de pass oublié ?" link />
+      </div>
+      <p-button class="w-full pt-3" type="submit">Créer un compte</p-button>
+    </form>
+  </div>
+  <div class="w-1/2 h-full p-14"></div>
+</div>

@@ -1,4 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
+@font-face {
+  font-family: 'DM Sans';
+  src: url('/fonts/DMSans-VariableFont_opsz,wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'DM Sans';
+  src: url('/fonts/DMSans-Italic-VariableFont_opsz,wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Syne';
+  src: url('/fonts/Syne-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+}
+
 h1 {
   font-family: 'Syne', sans-serif;
   font-weight: 800;
@@ -25,4 +46,8 @@ h2 {
 
 body {
   font-family: 'DM Sans', sans-serif;
+}
+
+button {
+  width: 100%;
 }

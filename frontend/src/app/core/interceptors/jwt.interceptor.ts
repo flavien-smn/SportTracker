@@ -8,6 +8,10 @@ export const jwtInterceptor: HttpInterceptorFn = (
 ) => {
   const authToken = inject(AuthService).getToken();
 
+  if (req.url.includes('/auth/')) {
+    return next(req);
+  }
+
   if (authToken) {
     // Clone the request to add the authentication header.
     const newReq = req.clone({

@@ -2,15 +2,25 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { jwtDecode, JwtPayload } from 'jwt-decode';
 import { Observable, tap } from 'rxjs';
+import { environment } from '../../environments/environment';
 import { AuthResponse, SigninRequest, SignupRequest } from '../shared/models/auth.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  constructor(private http: HttpClient) {}
+  private apiUrl = environment.apiUrl;
+
+  constructor(private http: HttpClient) {
+    const token = this.getToken();
+    if (token && this.isExpired(token)) {
+      this.logout();
+    }
+  }
 
   login(signinRequest: SigninRequest): Observable<AuthResponse> {
+    console.log('sing in', signinRequest);
+    console.log('request ', `${this.apiUrl}/auth/signin`);
     return this.http
-      .post<{ token: string }>('/api/auth/signin', signinRequest)
+      .post<{ token: string }>(`${this.apiUrl}/auth/signin`, signinRequest)
       .pipe(tap((response) => this.setToken(response.token)));
   }
 
@@ -19,7 +29,7 @@ export class AuthService {
   }
 
   signup(signupRequest: SignupRequest): Observable<void> {
-    return this.http.post<void>('/api/auth/signup', signupRequest);
+    return this.http.post<void>(`${this.apiUrl}/auth/signup`, signupRequest);
   }
 
   private setToken(token: string): void {
