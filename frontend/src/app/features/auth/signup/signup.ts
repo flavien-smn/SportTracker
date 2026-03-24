@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { Button } from 'primeng/button';
 import { Checkbox } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
@@ -7,7 +8,7 @@ import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-signup',
-  imports: [ReactiveFormsModule, Button, InputTextModule, Checkbox],
+  imports: [ReactiveFormsModule, Button, InputTextModule, Checkbox, RouterLink],
   templateUrl: './signup.html',
   styleUrl: './signup.scss',
 })

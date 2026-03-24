@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth-guard';
+import { AuthLayout } from './features/auth/auth-layout/auth-layout';
 import { Login } from './features/auth/login/login';
 import { Signup } from './features/auth/signup/signup';
 import { ExerciseList } from './features/exercise/exercise-list/exercise-list';
@@ -14,6 +15,7 @@ export const routes: Routes = [
   },
   {
     path: 'auth',
+    component: AuthLayout,
     children: [
       {
         path: 'login',

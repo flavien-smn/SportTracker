@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { Button } from 'primeng/button';
 import { Checkbox } from 'primeng/checkbox';
-import { Divider } from 'primeng/divider';
 import { InputTextModule } from 'primeng/inputtext';
 import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, Button, InputTextModule, Checkbox, Divider],
+  imports: [ReactiveFormsModule, Button, InputTextModule, Checkbox, RouterLink],
   templateUrl: './login.html',
   styleUrl: './login.scss',
 })

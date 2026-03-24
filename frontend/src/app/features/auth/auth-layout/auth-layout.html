@@ -1,0 +1,48 @@
+<div class="flex flex-row h-screen w-screen items-center justify-center">
+  <div class="w-1/2 h-full p-14 bg-neutral-900 flex flex-col justify-center gap-10">
+    <div>
+      <span class="logo-name">SportTracker</span>
+      <p class="text-neutral-500">Trackez vos progrès et battez vos records</p>
+    </div>
+    <div class="max-w-lg">
+      <router-outlet />
+    </div>
+  </div>
+
+  <div class="w-1/2 h-full p-14">
+    <div class="pb-5 box-border">
+      <h2>Vos entrainements en image</h2>
+      <p class="text-neutral-500">
+        Consignez vos séances d'entraînement, suivez vos séries et surveillez vos progrès au fil du
+        temps.
+      </p>
+    </div>
+
+    <div class="flex flex-col gap-5">
+      <div class="grid grid-cols-2 gap-x-3">
+        <p-card header="Cette semaine">
+          <div>4</div>
+          <p-chip class="h-5 text-xs bg-green-950! text-green-400!" label="+1 la semaine dernière">
+            <svg lucideIcon="arrow-up" [size]="15"></svg>
+          </p-chip>
+        </p-card>
+        <p-card header="Cette semaine">
+          <div>4</div>
+          <p-chip label="Action" />
+        </p-card>
+      </div>
+      <div>
+        <p-card header="Cette semaine">
+          <div>4</div>
+          <p-chip label="Action" />
+        </p-card>
+      </div>
+      <div>
+        <p-card header="Cette semaine">
+          <div>4</div>
+          <p-chip label="Action" />
+        </p-card>
+      </div>
+    </div>
+  </div>
+</div>

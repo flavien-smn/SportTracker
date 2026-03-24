@@ -4,6 +4,7 @@ import { provideRouter } from '@angular/router';
 import Lara from '@primeuix/themes/aura';
 import { providePrimeNG } from 'primeng/config';
 
+import { LucideArrowUp, LucideSquareCheck, provideLucideIcons } from '@lucide/angular';
 import { definePreset } from '@primeuix/themes';
 import { routes } from './app.routes';
 import { jwtInterceptor } from './core/interceptors/jwt.interceptor';
@@ -39,5 +40,6 @@ export const appConfig: ApplicationConfig = {
         },
       },
     }),
+    provideLucideIcons(LucideArrowUp, LucideSquareCheck),
   ],
 };
