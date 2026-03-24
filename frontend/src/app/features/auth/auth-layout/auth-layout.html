@@ -9,7 +9,7 @@
     </div>
   </div>
 
-  <div class="w-1/2 h-full p-14">
+  <div class="w-1/2 h-full p-14 flex flex-col justify-center">
     <div class="pb-5 box-border">
       <h2>Vos entrainements en image</h2>
       <p class="text-neutral-500">
@@ -20,27 +20,88 @@
 
     <div class="flex flex-col gap-5">
       <div class="grid grid-cols-2 gap-x-3">
-        <p-card header="Cette semaine">
-          <div>4</div>
-          <p-chip class="h-5 text-xs bg-green-950! text-green-400!" label="+1 la semaine dernière">
-            <svg lucideIcon="arrow-up" [size]="15"></svg>
-          </p-chip>
+        <p-card header="Séances">
+          <div class="flex flex-col gap-y-2">
+            <p class="text-violet-500 font-bold text-xl">4 séances</p>
+            <p-chip
+              class="h-5 text-xs bg-green-950! text-green-400! w-fit"
+              label="+1 cette semaine"
+            >
+              <svg lucideIcon="arrow-up" [size]="15"></svg>
+            </p-chip>
+            <div class="mini-bars">
+              <div class="bar" style="height: 30%"></div>
+              <div class="bar" style="height: 60%"></div>
+              <div class="bar" style="height: 100%"></div>
+              <div class="bar" style="height: 45%"></div>
+              <div class="bar" style="height: 80%"></div>
+              <div class="bar" style="height: 20%"></div>
+              <div class="bar" style="height: 0%"></div>
+            </div>
+          </div>
         </p-card>
-        <p-card header="Cette semaine">
-          <div>4</div>
-          <p-chip label="Action" />
+        <p-card header="Charge totale">
+          <div class="flex flex-col gap-y-2">
+            <p class="text-violet-500 font-bold text-xl">12.4K Kg soulevés</p>
+            <p-chip class="h-5 text-xs bg-green-950! text-green-400! w-fit" label="+200">
+              <svg lucideIcon="arrow-up" [size]="15"></svg>
+            </p-chip>
+            <div class="mini-bars">
+              <div class="bar" style="height: 30%"></div>
+              <div class="bar" style="height: 60%"></div>
+              <div class="bar" style="height: 100%"></div>
+              <div class="bar" style="height: 45%"></div>
+              <div class="bar" style="height: 80%"></div>
+              <div class="bar" style="height: 20%"></div>
+              <div class="bar" style="height: 0%"></div>
+            </div>
+          </div>
         </p-card>
       </div>
       <div>
-        <p-card header="Cette semaine">
-          <div>4</div>
-          <p-chip label="Action" />
-        </p-card>
-      </div>
-      <div>
-        <p-card header="Cette semaine">
-          <div>4</div>
-          <p-chip label="Action" />
+        <p-card>
+          <div class="flex flex-row justify-between items-center pb-2 box-border">
+            <p>Dernières séances</p>
+            <p-button link label="Les voir →" size="small" disabled></p-button>
+          </div>
+          <div class="flex flex-row items-center gap-2 py-2 box-border">
+            <div class="h-7 w-7 flex items-center justify-center rounded-lg bg-primary-900/60 py-2">
+              <svg lucideIcon="dumbbell" size="15"></svg>
+            </div>
+            <div class="text-xs flex-1">
+              <p>Push day</p>
+              <p class="text-neutral-500 font-light">Aujd. - 5 exercices</p>
+            </div>
+            <div class="text-xs">
+              <p>55 <span class="text-neutral-500">min</span></p>
+            </div>
+          </div>
+          <p-divider></p-divider>
+          <div class="flex flex-row items-center gap-2 py-2 box-border">
+            <div class="h-7 w-7 flex items-center justify-center rounded-lg bg-green-900/60">
+              <svg lucideIcon="dumbbell" size="15"></svg>
+            </div>
+            <div class="text-xs flex-1">
+              <p>Leg day</p>
+              <p class="text-neutral-500 font-light">Hier - 6 exercices</p>
+            </div>
+            <div class="text-xs">
+              <p>55 <span class="text-neutral-500">min</span></p>
+            </div>
+          </div>
+          <p-divider></p-divider>
+          <div class="flex flex-row items-center gap-2 py-2 box-border">
+            <div class="h-7 w-7 flex items-center justify-center rounded-lg bg-orange-900/60">
+              <svg lucideIcon="dumbbell" size="15"></svg>
+            </div>
+            <div class="text-xs flex-1">
+              <p>Pull day</p>
+              <p class="text-neutral-500 font-light">18 fevr. - 6 exercices</p>
+            </div>
+            <div class="text-xs">
+              <p>40 <span class="text-neutral-500">min</span></p>
+            </div>
+          </div>
         </p-card>
       </div>
     </div>
