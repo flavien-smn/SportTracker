@@ -52,3 +52,7 @@ body {
 button {
   width: 100%;
 }
+
+.form-error-message {
+  @apply text-red-500 text-sm;
+}

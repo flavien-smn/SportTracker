@@ -9,10 +9,10 @@
       <label for="email">Email :</label>
       <input pInputText id="email" type="text" formControlName="email" />
       @if (signInForm.get('email')?.touched && signInForm.controls['email'].hasError('required')) {
-        <div class="text-red-500 text-sm">Email requis</div>
+        <div class="form-error-message">Email requis</div>
       }
       @if (signInForm.get('email')?.touched && signInForm.controls['email'].hasError('email')) {
-        <div class="text-red-500 text-sm">Email invalide</div>
+        <div class="form-error-message">Email invalide</div>
       }
     </div>
 
@@ -22,7 +22,7 @@
       @if (
         signInForm.get('password')?.touched && signInForm.controls['password'].hasError('required')
       ) {
-        <div class="text-red-500 text-sm">Mot de passe requis</div>
+        <div class="form-error-message">Mot de passe requis</div>
       }
     </div>
 
@@ -36,7 +36,7 @@
       >Se connecter</p-button
     >
     @if (signInForm.errors?.['invalidCredentials']) {
-      <div class="text-red-500 text-sm">Email ou mot de passe incorrect</div>
+      <div class="form-error-message">Email ou mot de passe incorrect</div>
     }
   </form>
   <span class="flex justify-start items-center"
