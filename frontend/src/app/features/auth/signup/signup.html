@@ -6,13 +6,24 @@
     class="flex flex-col gap-y-3 w-full"
   >
     <div class="flex flex-col">
-      <label for="email">Email :</label>
+      <label for="email">Email *</label>
       <input pInputText id="email" type="text" formControlName="email" />
+      @if (signUpForm.get('email')?.touched && signUpForm.controls['email'].hasError('required')) {
+        <div class="text-red-500 text-sm">Email requis</div>
+      }
+      @if (signUpForm.get('email')?.touched && signUpForm.controls['email'].hasError('email')) {
+        <div class="text-red-500 text-sm">Email invalide</div>
+      }
     </div>
 
     <div class="flex flex-col">
-      <label for="password">Password :</label>
+      <label for="password">Mot de passe *</label>
       <input pInputText id="password" type="password" formControlName="password" />
+      @if (
+        signUpForm.get('password')?.touched && signUpForm.controls['password'].hasError('required')
+      ) {
+        <div class="text-red-500 text-sm">Mot de passe requis</div>
+      }
     </div>
 
     <div class="flex flex-row justify-between w-full items-center">
@@ -21,7 +32,9 @@
       </label>
       <p-button label="Mot de pass oublié ?" link />
     </div>
-    <p-button class="w-full pt-3" type="submit">Créer un compte</p-button>
+    <p-button [disabled]="signUpForm.invalid" class="w-full pt-3" type="submit"
+      >Créer un compte</p-button
+    >
   </form>
   <span class="flex justify-start items-center"
     >Vous avez déjà un compte ? <p-button label="Se connecter" link routerLink="/auth/login"

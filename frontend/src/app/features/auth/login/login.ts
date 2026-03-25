@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -24,7 +25,6 @@ export class Login {
   ) {}
 
   onSubmitLoginForm() {
-    console.log('oui');
     if (!this.signInForm.valid) {
       return;
     }
@@ -32,11 +32,12 @@ export class Login {
 
     this.authService.login({ email: email!, password: password! }).subscribe({
       next: (token) => {
-        console.log('router');
         this.router.navigate(['/workouts']);
       },
-      error: (err) => {
-        console.error('Erreur login:', err);
+      error: (err: HttpErrorResponse) => {
+        if (err.status === 401) {
+          this.signInForm.setErrors({ invalidCredentials: true });
+        }
       },
     });
   }

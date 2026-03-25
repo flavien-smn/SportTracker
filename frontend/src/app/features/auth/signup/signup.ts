@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Button } from 'primeng/button';
 import { Checkbox } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
@@ -18,10 +18,12 @@ export class Signup {
     password: new FormControl<string>('', [Validators.required]),
   });
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+  ) {}
 
   onSubmitSignupForm() {
-    console.log('oui');
     if (!this.signUpForm.valid) {
       return;
     }
@@ -32,9 +34,11 @@ export class Signup {
         password: this.signUpForm.value.password!,
       })
       .subscribe({
-        next: () => {},
+        next: () => {
+          this.router.navigate(['/auth/login']);
+        },
         error: () => {
-          console.log('error signup');
+          console.error('error signup');
         },
       });
   }

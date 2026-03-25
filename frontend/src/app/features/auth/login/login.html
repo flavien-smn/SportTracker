@@ -8,11 +8,22 @@
     <div class="flex flex-col">
       <label for="email">Email :</label>
       <input pInputText id="email" type="text" formControlName="email" />
+      @if (signInForm.get('email')?.touched && signInForm.controls['email'].hasError('required')) {
+        <div class="text-red-500 text-sm">Email requis</div>
+      }
+      @if (signInForm.get('email')?.touched && signInForm.controls['email'].hasError('email')) {
+        <div class="text-red-500 text-sm">Email invalide</div>
+      }
     </div>
 
     <div class="flex flex-col">
       <label for="password">Password :</label>
       <input pInputText id="password" type="password" formControlName="password" />
+      @if (
+        signInForm.get('password')?.touched && signInForm.controls['password'].hasError('required')
+      ) {
+        <div class="text-red-500 text-sm">Mot de passe requis</div>
+      }
     </div>
 
     <div class="flex flex-row justify-between w-full items-center">
@@ -21,7 +32,12 @@
       </label>
       <p-button label="Mot de pass oublié ?" link />
     </div>
-    <p-button class="w-full pt-3" type="submit">Se connecter</p-button>
+    <p-button [disabled]="signInForm.invalid" class="w-full pt-3" type="submit"
+      >Se connecter</p-button
+    >
+    @if (signInForm.errors?.['invalidCredentials']) {
+      <div class="text-red-500 text-sm">Email ou mot de passe incorrect</div>
+    }
   </form>
   <span class="flex justify-start items-center"
     >Vous n'avez pas de compte ? <p-button label="Créer un compte" link routerLink="/auth/signup"
