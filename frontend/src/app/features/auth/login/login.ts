@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Button } from 'primeng/button';
 import { Checkbox } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
@@ -18,7 +18,10 @@ export class Login {
     password: new FormControl('', [Validators.required]),
   });
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+  ) {}
 
   onSubmitLoginForm() {
     console.log('oui');
@@ -29,7 +32,8 @@ export class Login {
 
     this.authService.login({ email: email!, password: password! }).subscribe({
       next: (token) => {
-        console.log('youhouuuu', token);
+        console.log('router');
+        this.router.navigate(['/workouts']);
       },
       error: (err) => {
         console.error('Erreur login:', err);

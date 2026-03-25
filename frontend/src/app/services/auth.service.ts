@@ -17,8 +17,6 @@ export class AuthService {
   }
 
   login(signinRequest: SigninRequest): Observable<AuthResponse> {
-    console.log('sing in', signinRequest);
-    console.log('request ', `${this.apiUrl}/auth/signin`);
     return this.http
       .post<{ token: string }>(`${this.apiUrl}/auth/signin`, signinRequest)
       .pipe(tap((response) => this.setToken(response.token)));
